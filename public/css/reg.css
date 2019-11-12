@@ -1,0 +1,84 @@
+/* My styling */
+.dispalyPlate {
+  position: relative;
+  box-sizing: border-box;
+}
+
+.dispalyPlateTemp {
+  position: relative;
+  box-sizing: border-box;
+}
+
+li {
+    width: 150px;
+    height: 50px;
+    background-color: yellow;
+    box-shadow: 10px 10px 5px #888888;
+    border: 2px solid black;
+    border-radius: 4px;
+    align-items: center;
+    position: relative;
+  }
+    
+li {
+    text-align: center;
+    padding-top: 10px;
+    margin: auto;
+    color: #000000;
+    font-family: Trebuchet MS;
+    font-size: 25px;
+    font-weight: bold;
+    position: relative;
+
+  } 
+
+  li {
+    display: inline;
+    margin: 4px;
+
+  }
+
+  .heading{
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    text-align: center;
+    font-size: 40px;
+    text-underline-position: below;
+    text-decoration-style: double;
+  }
+  
+  .textbox{
+    display: inline;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-size: 10px;
+    text-align: center;
+  } 
+
+
+  .regAddBtn{
+  margin-right: 250px;
+  }
+
+  .regAddBtnTemp{
+    margin-right: 250px;
+    }
+
+
+  li{
+    list-style-type: none;
+  }
+
+  .errorMsg{
+    color: red;
+  }
+
+  .errorMsgTemp{
+    color: red;
+  }
+
+  .positiveMsg{
+    color: green;
+  }
+
+  .positiveMsgTemp{
+    color: green;
+  }
