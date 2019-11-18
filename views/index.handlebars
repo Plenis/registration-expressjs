@@ -2,15 +2,14 @@
         <div class="heading col-12">
             <h1>REGISTRATION NUMBERS</h1>
         </div>
-
-        <div id="box" class="col-12">
+<form action="/reg-numbers" method="POST">
+<div id="box" class="col-12">
             <div class="col-12 center">
-                <input type="text" class="enteredRegNum" placeholder="Enter Valid Reg Number">
+                <input type="text" class="enteredRegNum" placeholder="Enter Valid Reg Number" name="reg">
             </div>
         </div>
 
         <br>
-<form action="/reg-numbers" method="POST">
         <div class="regAddBtn col-12 center" name="regAddBtn">
             <button class="addReg">ADD</button>
      </form>
@@ -18,31 +17,40 @@
             <button class="clearReg">CLEAR</button>
             <br><br>
             <div class='row1'>
-                <select class="towns center" names="towns">
-                    <option value="">Select Town</option>
-                    <option value="CA">Cape Town</option>
-                    <option value="CY">Bellville</option>
-                    <option value="CJ">Paarl</option>
+                <select onchange="selectTown()" names="towns" class="towns center">
+                    <option value="all">Select Town</option>
+                    {{#each towns}}
+                    <option value="{{town_code}}" {{selectedTag}}>{{town}}</option>
+                    {{/each}}
                 </select>
+
             </div>
 
         <br><br>
 
         <div class='col-12 center'>
-            <p class='errorMsg'></p>
+            <p class='errorMsg'>{{message.error}}</p>
         </div>
 
         <div class='col-12 center'>
-            <p class='positiveMsg'></p>
+            <p class='positiveMsg'>{{message.success}}</p>
         </div>
 
         <div class="row2">
-        </div>
-            <ul class="dispalyPlate">{{#each regDisplay}}
-{{reg_number}}
-{{/each}}
 
-           </ul>
-        </div>
+<div class="row">
+  
+   {{#each regDisplay}}
+  <li class="displayPlate">{{reg_number}}</li>
+       {{/each}}
+ 
+    </div>
         
     </div>
+<script>
+ function selectTown(){
+    
+     var tag = document.querySelector(".towns").value; 
+    location.href = '/filter/' + tag;
+ }
+</script>

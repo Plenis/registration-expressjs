@@ -10,3 +10,7 @@ create table towns(
  town_id int,
  foreign key (town_id) references towns(id)
  );
+
+insert into towns (town, reg_code) values('Cape Town', 'CA');
+insert into towns (town, reg_code) values('Bellville', 'CY');
+insert into towns (town, reg_code) values('Paarl', 'CJ');

@@ -20,19 +20,26 @@ if (process.env.DATABASE_URL && !local) {
 // which db connection to use
 const connectionString =
   process.env.DATABASE_URL ||
-  "postgresql://sino:codex123@localhost:5432/registration";
+  "postgresql://sino:codex123@localhost:5432/registration-opp";
 
 const pool = new Pool({
   connectionString,
   ssl: useSSL
 });
 
-const registration = registrationOpp();
+const registration = registrationOpp(pool);
 
 app.engine(
   "handlebars",
   exphbs({
     defaultLayout: "main",
+    helpers:{
+      selectedTag: function(){
+          if(this.selected){
+              return 'selected';
+          }
+      },
+    },
     extname: ".handlebars",
     layoutsDir: __dirname + "/views/layouts",
     partialsDir: __dirname + "/views/partials"
@@ -59,34 +66,42 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 app.get("/", async function(req, res) {
-    // regDisplay = await registration.addReg()
+    let regDisplay = await registration.getRegNumbers();
+    let towns = await registration.getTowns();
     res.render("index", {
-      // regDisplay
+      regDisplay,
+      towns
     });
   });
 
-app.get("/reg-numbers", async function(req, res){
-   const regPlate = req.body.enteredRegNum
-
-  //  regDisplay = await registration.regCheck(regPlate)
-
-   if(regPlate === "" || !regPlate){
-     await req.flash("info", "Invalid registration number - town not supported.");
-   }
-   else if(regPlate === true){
-     await req.flash("info", "Registration number added successfully!");
-   }
-   else{
-     await req.flash("info", "This registration number already exists!");
-     return false;
-   }
-   res.redirect("/");
-})  
+  app.get("/filter/:tag", async function(req, res) {
+    let tag = req.params.tag;
+    let regDisplay = await registration.filter(tag);
+  
+    res.render("index", {
+      regDisplay,
+      towns
+    });
+  });
 
 app.post("/reg-numbers", async function(req, res){
-  res.render("index",{
-    regDisplay
-  })
+   const regPlate = req.body.reg
+ 
+   regDisplay = await registration.addReg(regPlate)
+
+
+   if(regPlate === "" || !regPlate){
+     await req.flash("error", "Invalid registration number - town not supported.");
+   }
+   else if(regPlate){
+     await req.flash("success", "Registration number added successfully!");
+   }
+   else{
+     await req.flash("error", "This registration number already exists!");
+     return false;
+   }
+
+  res.redirect('/');
 })
 
 const PORT = process.env.PORT || 5500;
