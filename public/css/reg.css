@@ -4,11 +4,6 @@
   box-sizing: border-box;
 }
 
-.dispalyPlateTemp {
-  position: relative;
-  box-sizing: border-box;
-}
-
 li {
     width: 150px;
     height: 50px;
@@ -58,11 +53,6 @@ li {
   margin-right: 250px;
   }
 
-  .regAddBtnTemp{
-    margin-right: 250px;
-    }
-
-
   li{
     list-style-type: none;
   }
@@ -71,14 +61,6 @@ li {
     color: red;
   }
 
-  .errorMsgTemp{
-    color: red;
-  }
-
   .positiveMsg{
-    color: green;
-  }
-
-  .positiveMsgTemp{
     color: green;
   }

@@ -6,34 +6,37 @@
 <div id="box" class="col-12">
             <div class="col-12 center">
                 <input type="text" class="enteredRegNum" placeholder="Enter Valid Reg Number" name="reg">
-            </div>
+           
         </div>
 
         <br>
         <div class="regAddBtn col-12 center" name="regAddBtn">
             <button class="addReg">ADD</button>
      </form>
-            
+            <form action="/clear" method="post">
             <button class="clearReg">CLEAR</button>
+           
             <br><br>
             <div class='row1'>
-                <select onchange="selectTown()" names="towns" class="towns center">
-                    <option value="all">Select Town</option>
+                    <select onchange="selectTown()" names="towns" class="towns center">
+                        <option>Select Town</option>
+                    <option value="all">All Towns</option>
                     {{#each towns}}
-                    <option value="{{town_code}}" {{selectedTag}}>{{town}}</option>
+                    <option value={{reg_code}} {{selectedTag}}>{{town}}</option>
                     {{/each}}
                 </select>
-
+ </div>  
+ </form>
             </div>
-
+ 
         <br><br>
 
         <div class='col-12 center'>
-            <p class='errorMsg'>{{message.error}}</p>
+            {{messages.error}}
         </div>
 
         <div class='col-12 center'>
-            <p class='positiveMsg'>{{message.success}}</p>
+            <p class='positiveMsg'>{{messages.success}}</p>
         </div>
 
         <div class="row2">
@@ -47,6 +50,7 @@
     </div>
         
     </div>
+
 <script>
  function selectTown(){
     

@@ -4,7 +4,7 @@ const bodyParser = require("body-parser");
 const registrationOpp = require("./registration");
 const flash = require("express-flash");
 const session = require("express-session");
-let regDisplay = "";
+let regPlate
 
 const app = express();
 
@@ -66,42 +66,50 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 app.get("/", async function(req, res) {
-    let regDisplay = await registration.getRegNumbers();
+   
     let towns = await registration.getTowns();
     res.render("index", {
-      regDisplay,
-      towns
-    });
-  });
-
-  app.get("/filter/:tag", async function(req, res) {
-    let tag = req.params.tag;
-    let regDisplay = await registration.filter(tag);
-  
-    res.render("index", {
-      regDisplay,
+      regDisplay:await registration.getRegNumbers(),
       towns
     });
   });
 
 app.post("/reg-numbers", async function(req, res){
-   const regPlate = req.body.reg
- 
-   regDisplay = await registration.addReg(regPlate)
-
-
+    regPlate = req.body.reg
+ console.log("regPlate", regPlate)
+ if(await registration.regDuplicate() === 0){
+  await registration.addReg(regPlate)
+// console.log("regDisplay", regDisplay)
+// } else{
+//    req.flash("error", "This registration number already exists!");
+ }
    if(regPlate === "" || !regPlate){
-     await req.flash("error", "Invalid registration number - town not supported.");
+    req.flash("error", "Invalid registration number - town not supported.");
    }
    else if(regPlate){
-     await req.flash("success", "Registration number added successfully!");
+     req.flash("success", "Registration number added successfully!");
    }
-   else{
-     await req.flash("error", "This registration number already exists!");
-     return false;
+   else if(regPlate){
+      req.flash("error", "This registration number already exists!");
    }
 
   res.redirect('/');
+})
+
+app.get("/filter/:tag", async function(req, res) {
+  let tag = req.params.tag;
+  let regDisplay = await registration.filter(tag);
+  let towns = await registration.getTowns();
+
+  res.render("index", {
+    regDisplay,
+    towns
+  });
+});
+
+app.post("/clear", async function(req, res){
+  await registration.clearReg();
+  res.redirect("/")
 })
 
 const PORT = process.env.PORT || 5500;
@@ -109,3 +117,4 @@ const PORT = process.env.PORT || 5500;
 app.listen(PORT, function() {
   console.log("App has started", PORT);
 });
+

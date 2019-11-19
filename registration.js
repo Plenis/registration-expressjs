@@ -2,17 +2,21 @@ module.exports = function RegistrationOpp(pool) {
 
   var regex = /^[A-Za-z]{2}\s[-0-9\s]{3}\s[0-9]{3}$/;
   let numberPlate;
+  let vehicle;
+  let plate;
 
 
   async function addReg(regNumber) {
-    let plate = regNumber;
+    plate = regNumber;
 
-    let vehicle = await pool.query(
+    vehicle = await pool.query(
       "SELECT * FROM reg_plates WHERE reg_number = $1",
       [plate]
     );
-
+    townCodes
     let allValidTowns = await pool.query("SELECT * FROM towns");
+      console.log(vehicle.rows.length);
+      if(vehicle.rows.length === 0){
 
     let validTowns = allValidTowns.rows;
 
@@ -26,8 +30,18 @@ module.exports = function RegistrationOpp(pool) {
         );
       }
     }
+  }
+  else{
+    var error = ''
+  }
+  }
 
-    
+  async function regDuplicate(){
+    vehicle = await pool.query(
+      "SELECT * FROM reg_plates WHERE reg_number = $1",
+      [plate]
+    );
+    return vehicle.rows.length
   }
 
   async function getRegNumbers() {
@@ -59,7 +73,7 @@ module.exports = function RegistrationOpp(pool) {
     })
 
     return filteredRegNumbers;
-  }
+  } 
 
   async function regCheck(code) {
     var car = regex.test(code);
@@ -73,13 +87,22 @@ module.exports = function RegistrationOpp(pool) {
     return numberPlate;
   }
 
+  async function clearReg(){
+    let regDelete = await pool.query('DELETE FROM reg_plates');
+    return regDelete.rows;
+  }
+
 
   return {
     addReg,
     getRegNumbers,
+    regDuplicate,
     townCodes,
     filter,
     regCheck,
-    getTowns
+    getTowns,
+    clearReg
   };
 };
+
+
