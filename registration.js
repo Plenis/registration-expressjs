@@ -1,6 +1,6 @@
 module.exports = function RegistrationOpp(pool) {
 
-  var regex = /^[A-Za-z]{2}\s[-0-9\s]{3}\s[0-9]{3}$/;
+  var regex = /^[A-Za-z]{2}\s[-0-9\s]{3}\s[0-9]{3}$/.toUpperCase;
   let numberPlate;
   let vehicle;
   let plate;
@@ -31,7 +31,7 @@ module.exports = function RegistrationOpp(pool) {
       }
     }
   // }
-  // else{
+  // else{  
   //   var error = ''
   // }
   }
