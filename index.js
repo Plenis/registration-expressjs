@@ -27,6 +27,7 @@ const pool = new Pool({
   ssl: useSSL
 });
 
+
 const registration = registrationOpp(pool);
 
 app.engine(
@@ -77,21 +78,22 @@ app.get("/", async function(req, res) {
 app.post("/reg-numbers", async function(req, res){
     regPlate = req.body.reg
  console.log("regPlate", regPlate)
- if(await registration.regDuplicate() === 0){
+  // if(await registration.regDuplicate() === 0){
   await registration.addReg(regPlate)
-// console.log("regDisplay", regDisplay)
-// } else{
+//  console.log(await registration.regDuplicate())
+// }
+// else{
 //    req.flash("error", "This registration number already exists!");
- }
-   if(regPlate === "" || !regPlate){
-    req.flash("error", "Invalid registration number - town not supported.");
-   }
-   else if(regPlate){
-     req.flash("success", "Registration number added successfully!");
-   }
-   else if(regPlate){
-      req.flash("error", "This registration number already exists!");
-   }
+//  }
+  //  if(regPlate === "" || !regPlate){
+  //   req.flash("error", "Invalid registration number - town not supported.");
+  //  }
+  //  else if(regPlate){
+  //    req.flash("success", "Registration number added successfully!");
+  //  }
+  //  else if(regPlate){
+  //     req.flash("error", "This registration number already exists!");
+  //  }
 
   res.redirect('/');
 })

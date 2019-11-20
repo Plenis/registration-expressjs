@@ -16,7 +16,7 @@ module.exports = function RegistrationOpp(pool) {
     townCodes
     let allValidTowns = await pool.query("SELECT * FROM towns");
       console.log(vehicle.rows.length);
-      if(vehicle.rows.length === 0){
+     // if(vehicle.rows.length === 0){
 
     let validTowns = allValidTowns.rows;
 
@@ -30,10 +30,10 @@ module.exports = function RegistrationOpp(pool) {
         );
       }
     }
-  }
-  else{
-    var error = ''
-  }
+  // }
+  // else{
+  //   var error = ''
+  // }
   }
 
   async function regDuplicate(){
@@ -46,6 +46,8 @@ module.exports = function RegistrationOpp(pool) {
 
   async function getRegNumbers() {
     var registrationPlates = await pool.query("SELECT * FROM reg_plates");
+    console.log(registrationPlates.rows);
+    
     return registrationPlates.rows;
   }
 
