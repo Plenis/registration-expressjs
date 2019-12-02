@@ -4,8 +4,6 @@ const bodyParser = require("body-parser");
 const registrationOpp = require("./registration");
 const flash = require("express-flash");
 const session = require("express-session");
-let regPlate
-
 const app = express();
 
 const pg = require("pg");
@@ -20,7 +18,7 @@ if (process.env.DATABASE_URL && !local) {
 // which db connection to use
 const connectionString =
   process.env.DATABASE_URL ||
-  "postgresql://sino:codex123@localhost:5432/registration-opp";
+  "postgresql://coder:coder123@localhost:5432/registration-opp";
 
 const pool = new Pool({
   connectionString,
@@ -68,44 +66,55 @@ app.use(bodyParser.json());
 
 app.get("/", async function(req, res) {
    
-    let towns = await registration.getTowns();
+    let registrationNumbers = await registration.getRegNumbers();
+    console.log("regs:", registrationNumbers)
+    let filteredTowns = await registration.townSelected();
+
     res.render("index", {
-      regDisplay:await registration.getRegNumbers(),
-      towns
+     registrationNumbers,
+     filteredTowns
     });
   });
 
 app.post("/reg-numbers", async function(req, res){
-    regPlate = req.body.reg
-//  console.log("regPlate", regPlate)
-  // if(await registration.regDuplicate() === 0){
-  await registration.addReg(regPlate)
-//  console.log(await registration.regDuplicate())
-// }
-// else{
-//    req.flash("error", "This registration number already exists!");
-//  }
-   if(regPlate === "" || !regPlate){
-    req.flash("error", "Invalid registration number - town not supported.");
-   }
-   else if(regPlate){
-     req.flash("success", "Registration number added successfully!");
-   }
-   else if(regPlate){
-      req.flash("error", "This registration number already exists!");
-   }
+
+  let regPlate = req.body.reg;
+  var addedReg = await registration.addReg(regPlate);
+
+  if(addedReg){
+    req.flash('success', "Registration number added successfully!")
+  }
+  else{
+    req.flash('error', "Invalid registration number - town not supported. Registration cannnot be repeated!")
+  }
+
+  res.redirect('/');
+})
+
+app.post("/reg-numbers:reg_number", async function(req, res){
+
+  let regPlate = req.params.reg;
+  console.log("regPlate:", regPlate)
+  var addedReg = await registration.addReg(regPlate);
+  console.log("addedReg:", addedReg)
+  if(addedReg){
+    req.flash('success', "Registration number added successfully!")
+  }
+  else{
+    req.flash('error', "Invalid registration number - town not supported. Registration cannnot be repeated!")
+  }
 
   res.redirect('/');
 })
 
 app.get("/filter/:tag", async function(req, res) {
   let tag = req.params.tag;
-  let regDisplay = await registration.filter(tag);
-  let towns = await registration.getTowns();
+  let registrationNumbers = await registration.filter(tag);
+  let filteredTowns = await registration.townSelected(tag);
 
   res.render("index", {
-    regDisplay,
-    towns
+    registrationNumbers,
+    filteredTowns
   });
 });
 

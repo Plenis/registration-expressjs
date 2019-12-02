@@ -4,7 +4,7 @@ const pg = require("pg");
 const Pool = pg.Pool;
 
 const connectionString =
- process.env.DATABASE_URL || "postgresql://sino:codex123@localhost:5432/registration-opp"
+ process.env.DATABASE_URL || "postgresql://coder:coder123@localhost:5432/registration-opp"
 
  let useSSL = false;
  let local = process.env.LOCAL || false;
@@ -23,21 +23,19 @@ describe('Registration testing + database tests', function () {
 
     beforeEach(async function(){
         // clean the tables before each test run
-        await pool.query("delete from towns;");
+        // await pool.query("delete from towns;");
         await pool.query("delete from reg_plates;");
     });
 
 
     it('should display valid reg numbers containing CA for the town Cape Town', function () {
-         pool.query("delete from towns;");
-         pool.query("delete from reg_plates;");
 
         let input = RegistrationOpp(pool);
-         input.addReg("CA 125258")
-         input.addReg("CA 987 456")
+        await input.addReg("CA 125258")
+       await  input.addReg("CA 987 456")
 
-        let townCar =  input.townCar()
-        assert.deepEqual(townCar, ["CA 125258", "CA 987 456"])
+        let regCA =  await input.getRegNumbers()
+        assert.deepEqual(regCA, ["CA 125258", "CA 987 456"])
     })
 
     // it('should display valid reg numbers containg CY for the town Bellville', function () {

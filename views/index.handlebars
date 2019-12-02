@@ -31,7 +31,7 @@
  
         <br><br>
 
-        <div class='col-12 center' style="color: red;">
+        <div class='col-12 center' style="color: red">
             {{messages.error}}
         </div>
 
@@ -43,7 +43,7 @@
 
 <div class="row">
   
-   {{#each regDisplay}}
+   {{#each registrationNumbers}}
   <li class="displayPlate">{{reg_number}}</li>
        {{/each}}
  
@@ -53,7 +53,6 @@
 
 <script>
  function selectTown(){
-    
      var tag = document.querySelector(".towns").value; 
     location.href = '/filter/' + tag;
  }
