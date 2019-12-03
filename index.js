@@ -111,10 +111,13 @@ app.get("/filter/:tag", async function(req, res) {
   let tag = req.params.tag;
   let registrationNumbers = await registration.filter(tag);
   let filteredTowns = await registration.townSelected(tag);
+  let towns = await registration.getTowns()
 
   res.render("index", {
     registrationNumbers,
-    filteredTowns
+    filteredTowns,
+    towns
+    
   });
 });
 

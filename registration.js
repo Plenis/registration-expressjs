@@ -76,6 +76,18 @@ module.exports = function RegistrationOpp(pool) {
     return filteredRegNumbers;
   }
 
+  async function getTowns(){
+
+    let allTowns = await pool.query(
+      "SELECT * FROM towns"
+    );
+      
+    if (allTowns.rowCount > 0) return allTowns.rows
+    
+    
+
+  }
+
   async function townSelected(tag) {
 
     let storedTowns = await pool.query(
@@ -102,6 +114,7 @@ module.exports = function RegistrationOpp(pool) {
     getRegNumbers,
     filter,
     townSelected,
-    clearReg
+    clearReg,
+    getTowns
   };
 };

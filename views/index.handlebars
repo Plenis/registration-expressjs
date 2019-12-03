@@ -21,9 +21,12 @@
                     <select onchange="selectTown()" names="towns" class="towns center">
                         <option>Select Town</option>
                     <option value="all">All Towns</option>
-                    {{#each towns}}
+                    <option value="CA">Cape Town</option>
+                    <option value="CY">Bellville</option>
+                    <option value="CJ">Paarl</option>
+                    {{!-- {{#each filteredTowns}}
                     <option value={{reg_code}} {{selectedTag}}>{{town}}</option>
-                    {{/each}}
+                    {{/each}} --}}
                 </select>
  </div>  
  </form>
