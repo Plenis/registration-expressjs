@@ -7,7 +7,7 @@ node_js:
   - "8.10.0"
 
 before_script:
-  - psql -c 'create database registration-opp;' -U postgres
+  - psql -c 'create database registration-test;' -U postgres
   - psql -U postgres -d registration-opp -a -f registration.sql
 
 services:
