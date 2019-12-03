@@ -1,0 +1,23 @@
+language: node_js
+
+env:
+  - DATABASE_URL="postgresql://postgres@localhost:5432/registration-opp"
+
+node_js:  
+  - "8.10.0"
+
+before_script:
+  - psql -c 'create database registration-opp;' -U postgres
+  - psql -U postgres -d registration-opp -a -f registration.sql
+
+services:
+  - postgresql
+  
+addons:
+  apt:
+    sources:
+    - precise-pgdg-9.5
+    packages:
+    - postgresql-9.5
+    - postgresql-contrib-9.5
+  postgresql: 9.5
