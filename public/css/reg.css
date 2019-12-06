@@ -1,35 +1,24 @@
 /* My styling */
-.dispalyPlate {
+/* .displayPlate {
   position: relative;
   box-sizing: border-box;
+} */
+
+ul {
+  margin-bottom : 50px;
 }
 
 li {
-    width: 150px;
-    height: 50px;
+    /* width: 150px;*/
+    /* height: 5em;  */
+    padding: 5px;
     background-color: yellow;
-    box-shadow: 10px 10px 5px #888888;
-    border: 2px solid black;
-    border-radius: 4px;
-    align-items: center;
-    position: relative;
-  }
-    
-li {
-    text-align: center;
-    padding-top: 10px;
-    margin: auto;
-    color: #000000;
-    font-family: Trebuchet MS;
-    font-size: 25px;
-    font-weight: bold;
-    position: relative;
-
-  } 
-
-  li {
-    display: inline;
-    margin: 4px;
+     box-shadow: 10px 10px 5px #888888;
+    border: 1.5px solid black;
+    border-radius: 10%;
+    display: inline-block;
+    margin: 10px !important;
+    list-style-type: none;
 
   }
 
@@ -51,10 +40,6 @@ li {
 
   .regAddBtn{
   margin-right: 250px;
-  }
-
-  li{
-    list-style-type: none;
   }
 
   .errorMsg{

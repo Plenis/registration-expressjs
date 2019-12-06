@@ -1,62 +1,68 @@
-    <div class="col-12">
-        <div class="heading col-12">
-            <h1>REGISTRATION NUMBERS</h1>
-        </div>
-<form action="/reg-numbers" method="POST">
-<div id="box" class="col-12">
+<div class="col-12">
+    <div class="heading col-12">
+        <h1>REGISTRATION NUMBERS</h1>
+    </div>
+    
+    <form action="/reg-numbers" method="POST">
+    
             <div class="col-12 center">
-                <input type="text" class="enteredRegNum"  placeholder="eg. CA 123-123" name="reg">
-           
-        </div>
+                <input type="text" class="enteredRegNum" placeholder="eg. CA 123-123" name="reg">
 
-        <br>
-        <div class="regAddBtn col-12 center" name="regAddBtn">
-            <button class="addReg">ADD</button>
-     </form>
-            <form action="/clear" method="post">
-            <button class="clearReg">CLEAR</button>
-           
-            <br><br>
-            <div class='row1'>
-                    <select onchange="selectTown()" names="towns" class="towns center">
-                        <option>Select Town</option>
-                    <option value="all">All Towns</option>
-                    <option value="CA">Cape Town</option>
-                    <option value="CY">Bellville</option>
-                    <option value="CJ">Paarl</option>
-                    {{!-- {{#each filteredTowns}}
-                    <option value={{reg_code}} {{selectedTag}}>{{town}}</option>
-                    {{/each}} --}}
-                </select>
- </div>  
- </form>
             </div>
- 
+
+            <br>
+           
+            <div class="regAddBtn col-12 center" name="regAddBtn">
+                <button class="addReg">ADD</button>
+            </div>
+    </form>
+    <form action="/clear" method="post">
+    <div class="col-12 center">
+        <button class="clearReg center">CLEAR</button>
+
         <br><br>
-
-        <div class='col-12 center' style="color: red">
-            {{messages.error}}
+        <div class='row1'>
+            <select onchange="selectTown()" names="towns" class="towns center">
+                <option>Select Town</option>
+                <option value="all">All Towns</option>
+                <option value="CA">Cape Town</option>
+                <option value="CY">Bellville</option>
+                <option value="CJ">Paarl</option>
+                {{!-- {{#each filteredTowns}}
+                <option value={{reg_code}} {{selectedTag}}>{{town}}</option>
+                {{/each}} --}}
+            </select>
         </div>
-
-        <div class='col-12 center'>
-            <p class='positiveMsg'>{{messages.success}}</p>
         </div>
+    </form>
 
-        <div class="row2">
 
-<div class="row">
-  
-   {{#each registrationNumbers}}
-  <li class="displayPlate">{{reg_number}}</li>
-       {{/each}}
- 
+    <br><br>
+
+    <div class='col-12 center' style="color: red">
+        {{messages.error}}
     </div>
-        
+
+    <div class='col-12 center'>
+        <p class='positiveMsg'>{{messages.success}}</p>
     </div>
+
+
+    <div class="row">
+        <div class="displayPlate">
+            <ul>
+                {{#each registrationNumbers}}
+                <li>{{reg_number}}</li>
+                {{/each}}
+            </ul>
+        </div>
+    </div>
+
+</div>
 
 <script>
- function selectTown(){
-     var tag = document.querySelector(".towns").value; 
-    location.href = '/filter/' + tag;
- }
+    function selectTown() {
+        var tag = document.querySelector(".towns").value;
+        location.href = '/filter/' + tag;
+    }
 </script>
